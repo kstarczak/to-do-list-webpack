@@ -1,0 +1,142 @@
+import PubSub from './pubSub';
+import { deleteAllChildren } from './myLibrary';
+
+
+
+const TaskInterface = (function () {
+
+    const load = function () {
+        const taskContent = document.querySelector('.task-content');
+        deleteAllChildren(taskContent);
+        const taskContainer = document.createElement('div');
+        taskContainer.classList.add('task-container');
+
+        const taskHeader = document.createElement('div');
+        taskHeader.classList.add('task-header');
+        taskHeader.textContent = '';
+
+        const taskList = document.createElement('ul')
+        taskList.classList.add('task-list');
+
+        const addTaskButton = document.createElement('button');
+        addTaskButton.type = 'button';
+        addTaskButton.classList.add('add-task-button');
+        addTaskButton.textContent = 'Add Task'
+        addTaskButton.addEventListener('click', addTask);
+        addTaskButton.style.display = 'none';
+
+        taskContainer.append(taskHeader, taskList, addTaskButton);
+        taskContent.append(taskContainer);
+    };
+
+    const loadList = function (list) {
+        const addTaskButton = document.querySelector('.add-task-button');
+        if (addTaskButton.style.display === 'none') {
+            addTaskButton.style.display = 'block';
+        };
+        const taskList = document.querySelector('.task-list');
+        deleteAllChildren(taskList);
+        list.forEach(function (task) {
+            const listItem = document.createElement('li');
+            listItem.id = task.type + task.id;
+            listItem.classList.add('task-link');
+            const taskTitle = document.createElement('div');
+            taskTitle.classList.add('task-name');
+            taskTitle.textContent = task.name;
+            const taskDescription = document.createElement('div');
+            taskDescription.classList.add('task-description');
+            taskDescription.textContent = task.description;
+            const deleteButton = document.createElement('button');
+            deleteButton.classList.add('delete-task-button');
+            deleteButton.type = 'button';
+            deleteButton.textContent = 'x';
+            listItem.append(taskTitle, taskDescription, deleteButton);
+            taskList.append(listItem);
+            deleteButton.addEventListener('click', deleteTask);
+            
+        });
+    };
+    function deleteTask(e) {
+        let taskId = e.target.parentElement.id;
+        taskId = parseInt(taskId.replace('task',''));
+        PubSub.publish('deleteTask', taskId);
+    }
+
+
+    //move code to forms.JS
+    const addTask = function () {
+        const contentCover = document.querySelector('.content-cover');
+        const forms = document.querySelector('.forms');
+        function createForm() {
+            contentCover.style.display = 'block';
+            const form = document.createElement('div');
+            form.classList.add('form');
+
+            const header = document.createElement('div');
+            header.textContent = 'Create New Task';
+
+            const nameInput = document.createElement('input');
+            nameInput.id = 'name';
+            nameInput.setAttribute('type', 'text');
+            nameInput.placeholder = 'Enter Task name'
+            nameInput.setAttribute('autocomplete', 'off');
+
+            const descInput = document.createElement('textarea')
+            descInput.id = 'description';
+            descInput.placeholder = 'Enter a description(optional)';
+            descInput.setAttribute('autocomplete', 'off');
+            descInput.setAttribute('rows', '4');
+
+            const buttons = document.createElement('div');
+            buttons.classList.add('buttons');
+
+            const cancelButton = document.createElement('button');
+            cancelButton.classList.add('button');
+            cancelButton.id = 'cancel-button';
+            cancelButton.textContent = 'Cancel';
+            cancelButton.addEventListener('click', closeForm);
+
+            const submitButton = document.createElement('button')
+            submitButton.classList.add('button');
+            submitButton.id = 'submit-button'
+            submitButton.textContent = 'Create';
+            submitButton.addEventListener('click', submitForm);
+
+            buttons.append(cancelButton, submitButton);
+
+            form.append(header, nameInput, descInput, buttons);
+            forms.append(form);
+        };
+        function closeForm() {
+            deleteAllChildren(forms);
+            contentCover.style.display = 'none';
+        }
+        function submitForm() {
+            const name = document.querySelector('#name').value;
+            const description = document.querySelector('#description').value;
+            const newTask = { name, description };
+            closeForm();
+            PubSub.publish('addTask', newTask);
+            
+        }
+        
+        createForm();
+    };
+    const clear = function (message) {
+        const taskList = document.querySelector('.task-list');
+        deleteAllChildren(taskList);
+        const messageDiv = document.createElement('div');
+        messageDiv.textContent = message;
+        taskList.appendChild(messageDiv);
+        
+
+    };
+
+    return { load, loadList, clear };
+}
+)();
+
+ //listen for task list modified and loadlist
+PubSub.subscribe('projectModified', TaskInterface.loadList);
+PubSub.subscribe('projectSelected', TaskInterface.loadList);
+PubSub.subscribe('currentProjectDeleted', TaskInterface.clear);

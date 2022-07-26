@@ -1,5 +1,5 @@
 
-export const PubSub = (function () {
+const PubSub = (function () {
     const events = {};
     const subscribe = function (event, func) {
         if (!events[event]) {
@@ -9,17 +9,17 @@ export const PubSub = (function () {
     };
     const unsubscribe = function (event, func) {
         if (events[event]) {
-            events[event].filter((f) => f !== func);
-        }
+            events[event] = events[event].filter((f) => f !== func);
+        };
     };
     const publish = function (event, data) {
         if (events[event]) {
             events[event].forEach( (func) => func(data) );
-            
         };
     };
-    const eventList = () => events;
 
-    return  { subscribe, unsubscribe, publish, eventList };
+    return  { subscribe, unsubscribe, publish };
 
 })();
+
+export default PubSub;

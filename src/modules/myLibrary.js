@@ -1,4 +1,4 @@
-import { PubSub } from "./pubSub.js";
+import { PubSub } from "./components/pubSub.js";
 
 const deleteAllChildren = function (parent) {
     while (parent.firstChild) {
@@ -14,8 +14,8 @@ const listObject = {
     },
     delete: function (itemId) {
         this.list = this.list.filter(obj => obj.id !== itemId);
-        const pubList = this.list;
-        PubSub.publish(`${this.type}Modified`, pubList);
+        //const pubList = this.list;
+        //PubSub.publish(`${this.type}Modified`, pubList);
     },
     select: function (itemId) {
         this.list.forEach(function (item) {
@@ -25,11 +25,11 @@ const listObject = {
                 item.selected = false;
             }
         });
-        const pubList = this.list;
-        const child = pubList.find(item => item.selected);
-        const childList = child.list
-        PubSub.publish(`${this.type}Modified`, pubList);
-        PubSub.publish(`${this.type}Selected`, childList)
+        //const pubList = this.list;
+        //const child = pubList.find(item => item.selected);
+        //const childList = child.list
+        //PubSub.publish(`${this.type}Modified`, pubList);
+        //PubSub.publish(`${this.type}Selected`, childList)
     },
 };
 

@@ -1,5 +1,4 @@
-import { addTemplate, Users } from './components/users.js';
-import { Interface, ProjectInterface } from './components/interface.js';
+import { Users } from './components/users';
 
 
 // add some function to get the user on page laod if stored in localStorage
@@ -9,14 +8,3 @@ import { Interface, ProjectInterface } from './components/interface.js';
 
 const userName = 'Konrad';
 Users.addUser(userName);
-
-
-// change placement for this
-const collapseProjectsButton = document.querySelector('.collapse-projects-button');
-collapseProjectsButton.addEventListener('click', collapseProjects);
-
-function collapseProjects() {
-    const projectLinks = document.querySelectorAll('.project-list li');
-    console.log(projectLinks);
-    projectLinks.forEach(projectLink => projectLink.classList.toggle('collapsed'));
-}

@@ -1,10 +1,9 @@
-import { PubSub } from "./pubSub.js";
 import { listObject } from "./myLibrary.js";
 
 const ToDoList = (function () {
     const create = function (name) {
         const type = 'projectList';
-        const selected = false;
+        let selected = false;
         const list = [];
         let idCount = 1;
         return Object.assign(Object.create(listObject),{ name, type, selected, list, idCount });
@@ -39,4 +38,12 @@ const Task = (function () {
 
 })();
 
-export { ToDoList, Project, Task };
+const addTemplate = function (userList) {
+    const templateProject = Project.create('My Errands');
+    templateProject.add(Task.create({ name: 'Buy milk' }));
+    templateProject.add(Task.create({ name: 'Pay cable bill' }));
+    userList.add(templateProject);
+};
+
+
+export { ToDoList, Project, Task, addTemplate };
