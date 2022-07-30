@@ -1,5 +1,6 @@
-import PubSub from './pubSub';
+import PubSub from './pubSub.js';
 import { deleteAllChildren } from "./myLibrary.js";
+import { addProject } from './modal.js';
 
 const Interface = (function () {
     const load = function (user) {
@@ -9,6 +10,10 @@ const Interface = (function () {
         const userInterface = document.createElement('div');
         userInterface.className = 'user-interface';
 
+        const headerText = document.createElement('div');
+        headerText.classList.add('header-text');
+        headerText.textContent = `${user.name}'s To Do List`;
+
         const menuButton = document.createElement('button');
         menuButton.className='menu-button';
         menuButton.type = 'button';
@@ -17,10 +22,6 @@ const Interface = (function () {
         const menuText = document.createElement('span');
         menuText.textContent = 'Menu';
         menuButton.append(menuIcon, menuText);
-
-        const headerText = document.createElement('div');
-        headerText.classList.add('header-text');
-        headerText.textContent = `${user.name}'s To Do List`;
 
         const nav = document.createElement('nav');
         nav.className = 'nav';
@@ -38,19 +39,26 @@ const Interface = (function () {
 
         const addProjectButton =  document.createElement('button');
         addProjectButton.type = 'button';
-        addProjectButton.className = 'add-project-button';
+        addProjectButton.className = 'add-project-button button';
         const addProjectIcon = document.createElement('div');
         addProjectIcon.classname = 'add-project-icon';
         const addProjectText = document.createElement('span');
         addProjectText.textContent = "Add New Project";
         addProjectButton.append(addProjectIcon, addProjectText);
+        addProjectButton.addEventListener('click', addProject);
 
 
-        userInterface.append(menuButton, headerText, nav, addProjectButton);
+        userInterface.append(headerText, menuButton, nav, addProjectButton);
         content.append(userInterface);
         PubSub.publish('projectListModified', user.list);
+
+
     };
     return { load};
 })();
 
-PubSub.subscribe('userSelected', Interface.load);
+
+export const subInterfaceToList = () => PubSub.subscribe('userSelected', Interface.load);
+
+
+export default subInterfaceToList;

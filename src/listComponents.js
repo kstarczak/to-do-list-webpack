@@ -28,22 +28,15 @@ const Project = (function () {
 
 const Task = (function () {
     const create = function (obj) {
-        const { name, description = null, due = null, proiority = 'normal' } = obj;
+        const { name, description = null, due = null, priority = 'normal' } = obj;
         const type = 'task';
         let selected = false;
         const { select } = { listObject };
-        return { name, description, due, proiority, type, selected, select };
+        return { name, type, selected, description, due, priority, select };
     };
     return { create };
 
 })();
 
-const addTemplate = function (userList) {
-    const templateProject = Project.create('My Errands');
-    templateProject.add(Task.create({ name: 'Buy milk' }));
-    templateProject.add(Task.create({ name: 'Pay cable bill' }));
-    userList.add(templateProject);
-};
 
-
-export { ToDoList, Project, Task, addTemplate };
+export { ToDoList, Project, Task };
