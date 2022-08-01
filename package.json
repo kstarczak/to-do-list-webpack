@@ -4,7 +4,9 @@
   "description": "",
   "private": "true",
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "sass": "sass src/scss/styles.scss:dist/styles.css",
+    "sass-w": "sass --watch src/scss/styles.scss:dist/styles.css"
   },
   "keywords": [],
   "author": "",

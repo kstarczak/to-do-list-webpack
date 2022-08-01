@@ -66,7 +66,7 @@ const ProjectInterface = (function () {
                 const deleteButton = document.createElement('button');
                 deleteButton.type = 'button';
                 deleteButton.className = 'delete-project-button button';
-                deleteButton.textContent = 'Delete Project';
+                deleteButton.ariaLabel = 'delete project';
                 deleteButton.addEventListener('click', deleteProject);
 
                 projectListItem.append(projectLink, addTaskButton, deleteButton);
@@ -75,18 +75,6 @@ const ProjectInterface = (function () {
             };
         };
         loadList(projects);
-
-
-        /*
-        const addTaskButton = document.createElement('button');
-        addTaskButton.type = 'button';
-        addTaskButton.className ='add-task-button';
-        addTaskButton.textContent = 'Add Task'
-        const toolTip = document.createElement('span')
-        addTaskButton.addEventListener('click', addTask);
-        addTaskButton.style.display = 'none';
-        */
-
 
 
         projectInterface.append(projectHeader, projectContainer);

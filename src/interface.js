@@ -13,18 +13,19 @@ const Interface = (function () {
         const headerText = document.createElement('div');
         headerText.classList.add('header-text');
         headerText.textContent = `${user.name}'s To Do List`;
-
+        
+        const menuWrapper = document.createElement('div');
+        menuWrapper.className='menu-wrapper';
         const menuButton = document.createElement('button');
         menuButton.className='menu-button';
         menuButton.type = 'button';
-        const menuIcon = document.createElement('div');
-        menuIcon.className = 'menu-icon';
         const menuText = document.createElement('span');
         menuText.textContent = 'Menu';
-        menuButton.append(menuIcon, menuText);
+        menuWrapper.append(menuButton);
+        menuButton.append(menuText);
 
         const nav = document.createElement('nav');
-        nav.className = 'nav';
+        nav.classList.add('nav');
         const menuList = document.createElement('ul');
         const switchUserList = document.createElement('li');
         const switchUserLink = document.createElement('a');
@@ -37,18 +38,20 @@ const Interface = (function () {
         menuList.append(switchUserList, aboutList);
         nav.append(menuList);
 
+        menuButton.addEventListener('click', () => nav.classList.toggle('open'));
+
         const addProjectButton =  document.createElement('button');
         addProjectButton.type = 'button';
         addProjectButton.className = 'add-project-button button';
         const addProjectIcon = document.createElement('div');
-        addProjectIcon.classname = 'add-project-icon';
+        addProjectIcon.className = 'add-icon';
         const addProjectText = document.createElement('span');
         addProjectText.textContent = "Add New Project";
         addProjectButton.append(addProjectIcon, addProjectText);
         addProjectButton.addEventListener('click', addProject);
 
 
-        userInterface.append(headerText, menuButton, nav, addProjectButton);
+        userInterface.append(headerText, menuWrapper, nav, addProjectButton);
         content.append(userInterface);
         PubSub.publish('projectListModified', user.list);
 

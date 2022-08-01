@@ -42,6 +42,7 @@ const TaskInterface = (function () {
         const loadList = function (list) {
             if (list.length < 1) {
                 const emptyList = document.createElement('li');
+                emptyList.className = 'empty-list';
                 emptyList.textContent = 'This project does not have any lists. Click the "Add Task" button to get started.';
                 taskList.appendChild(emptyList);
             } else {

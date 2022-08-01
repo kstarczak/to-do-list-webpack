@@ -28,8 +28,12 @@ const Users = (function () {
 
     return {addUser, switchUser, currentUser};
 }) ();
-PubSub.subscribe('addUser', Users.addUser);
-PubSub.subscribe('selectUser', Users.switchUser);
+
+const subToUserModal = ()=> {
+    PubSub.subscribe('addUser', Users.addUser);
+    PubSub.subscribe('selectUser', Users.switchUser);
+}
+
 
 
 
@@ -62,7 +66,7 @@ const List = (function () {
         const currentUser = Users.currentUser();
         currentUser.select(projectId);
         const currentProjectTaskList = getCurrentProject().list;
-        PubSub.publish('projectSelected', currentUser.list)
+        PubSub.publish('projectListModified', currentUser.list)
         PubSub.publish('projectSelected', currentProjectTaskList)
     }
     
@@ -120,4 +124,4 @@ const addTemplate = () => {
     
 
 
-export { Users, List, subToInterface, addTemplate};
+export { Users, List, subToInterface, subToUserModal, addTemplate};

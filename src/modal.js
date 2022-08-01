@@ -33,6 +33,70 @@ const closeModal = () => {
     formContainer.classList.remove('open');
     contentCover.classList.remove('cover');
 }
+/*
+const confirmDelete = ()=>
+    loadModalTemplate();
+*/
+
+const addUser = () => {
+    loadModalTemplate();
+    const formContainer = document.querySelector('.form-container')
+
+    const userForm = document.createElement('form');
+    userForm.className = 'user-form';
+    userForm.setAttribute('autocomplete', 'off');
+
+    const header = document.createElement('div');
+    header.classname = 'user-header';
+    header.textContent = 'Welcome to my TO-DO list!';
+
+    const subHeading = document.createElement('div');
+    subHeading.textContent = 'Enter your name below to get started.';
+    subHeading.className = 'user-sub-heading';
+    
+    const nameField = document.createElement('div');
+    const nameLabel = document.createElement('label');
+    nameLabel.for = 'name';
+    nameLabel.textContent = 'Name:'
+    const nameInput = document.createElement('input');
+    nameInput.id = 'name';
+    nameInput.type = 'text'
+    nameField.append(nameLabel, nameInput);
+
+    const submitForm = () => {
+        const name = nameInput.value;
+        closeModal();
+        PubSub.publish('addUser', name);
+    };
+    const buttonGroup = document.createElement('div');
+    buttonGroup.classList.add('button-group');
+    
+    const cancelButton = document.createElement('button');
+    cancelButton.type = 'button';
+    cancelButton.classList.add('button', 'cancel');
+    cancelButton.textContent = 'Cancel';
+    cancelButton.addEventListener('click', closeModal);
+
+    const submitButton = document.createElement('button')
+    submitButton.type = 'button';
+    submitButton.classList.add('button', 'submit');
+    submitButton.textContent = 'Create';
+    submitButton.addEventListener('click', submitForm);
+
+    buttonGroup.append(cancelButton, submitButton);
+
+
+    userForm.append(header, subHeading, nameField, buttonGroup);
+    userForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        submitForm();
+    });
+
+
+    formContainer.append(userForm);
+};
+
+
 
 const addProject = () => {
     loadModalTemplate();
@@ -56,7 +120,8 @@ const addProject = () => {
 
     const colorField = document.createElement('div');
     const colorLabel = document.createElement('label');
-    colorLabel.for = 'color';
+    colorLabel.for = 'color1';
+
     colorLabel.textContent = 'Choose a color (optional)';
     const colorInput = document.createElement('input');
     colorInput.id = 'color';
@@ -92,9 +157,13 @@ const addProject = () => {
 
 
     projectForm.append(header, nameField, colorField, buttonGroup);
-
+    projectForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        submitForm();
+    });
 
     formContainer.append(projectForm);
+    
 };
 
 
@@ -184,10 +253,14 @@ const addTask = () => {
 
 
     taskForm.append(header, nameField, descField, dueField, priField, buttonGroup);
-
+    taskForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        submitForm();
+    });
 
     formContainer.append(taskForm);
 };
+
 
 const editTask = (e) => {
 
@@ -293,13 +366,15 @@ const editTask = (e) => {
     submitButton.addEventListener('click', submitForm);
 
     buttonGroup.append(cancelButton, submitButton);
-
-
     taskForm.append(header, nameField, descField, dueField, priField, buttonGroup);
+    taskForm.addEventListener('submit', (event) => {
+        event.preventDefault();
+        submitForm();
+    });
 
 
     formContainer.append(taskForm);
 };
 
 
-export { addProject, addTask, editTask };
+export { addProject, addTask, editTask, addUser };
