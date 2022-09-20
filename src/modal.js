@@ -49,6 +49,8 @@ const addUser = () => {
     const header = document.createElement('div');
     header.classname = 'user-header';
     header.textContent = 'Welcome to my TO-DO list!';
+    header.className = 'welcome-header';
+
 
     const subHeading = document.createElement('div');
     subHeading.textContent = 'Enter your name below to get started.';
@@ -108,6 +110,7 @@ const addProject = () => {
 
     const header = document.createElement('div');
     header.textContent = 'Create New Project';
+    header.className = 'header';
     
     const nameField = document.createElement('div');
     const nameLabel = document.createElement('label');
@@ -177,6 +180,7 @@ const addTask = () => {
 
     const header = document.createElement('div');
     header.textContent = 'Create New task';
+    header.className = 'header';
     
     const nameField = document.createElement('div');
     const nameLabel = document.createElement('label');
@@ -261,20 +265,20 @@ const addTask = () => {
     formContainer.append(taskForm);
 };
 
-
+/* editTask selects the DOM data from the current task, creates a form, 
+then populates the form with that data */
 const editTask = (e) => {
-
-    const details = e.target.previousSibling;
-    const taskId = e.target.dataset.id;
-    const allDetails = Array.from(details.children);
+    
+    const button = e.target;
+    const taskId = button.dataset.id;
+    const details = Array.from(button.parentElement.children);
     const name = document.querySelector(`.task-link[data-id='${taskId}']`);
     const currentName = name.textContent;
-    console.log(name.textContent);
-    const desc = allDetails.find((child) => child.className === 'task-description');
+    const desc = details.find((child) => child.className === 'task-description');
     const currentDesc = desc.textContent
-    const due = allDetails.find((child) => child.className === 'task-due');
+    const due = details.find((child) => child.className === 'task-due');
     const currentDue = due.textContent;
-    const pri = allDetails.find((child) => child.className === 'task-priority');
+    const pri = details.find((child) => child.className === 'task-priority');
     const currentPri = pri.textContent;
 
     loadModalTemplate();
@@ -286,6 +290,7 @@ const editTask = (e) => {
 
     const header = document.createElement('div');
     header.textContent = 'Create New task';
+    header.className = 'header';
     
     const nameField = document.createElement('div');
     const nameLabel = document.createElement('label');

@@ -51,7 +51,7 @@ const TaskInterface = (function () {
                 taskItem.classList.add ('task');
                 
                 const taskSummary = document.createElement('div');
-                taskSummary.classList.add('task-Summary');
+                taskSummary.classList.add('task-summary');
 
                 const taskDetails = document.createElement('div');
                 taskDetails.classList.add('task-details');
@@ -74,25 +74,29 @@ const TaskInterface = (function () {
                 deleteButton.type= 'button';
                 deleteButton.className ='delete-task-button';
                 deleteButton.dataset.id = task.id;
-                deleteButton.textContent = 'Delete Task';
+                deleteButton.ariaLabel = "delete task";
                 deleteButton.addEventListener('click', deleteTask);
 
                 taskSummary.append(taskLink, deleteButton);           
                
-                const taskInfo = document.createElement('div');
-                taskInfo.className = 'task-info';
-
+                const desc = document.createElement('div');
+                desc.classList.add('task-description-title');
+                desc.textContent = 'Description';
                 const taskDesc = document.createElement('div');
                 taskDesc.classList.add('task-description');
                 taskDesc.textContent = task.description;
+                const due = document.createElement('div');
+                due.classList.add('task-due-title');
+                due.textContent = 'Due date';
                 const taskDue = document.createElement('div');
                 taskDue.classList.add('task-due');
                 taskDue.textContent = task.due;
+                const priority = document.createElement('div');
+                priority.classList.add('task-priority-title');
+                priority.textContent = 'priority'
                 const taskPriority = document.createElement('div');
                 taskPriority.classList.add('task-priority');
                 taskPriority.textContent = task.priority;
-
-                taskInfo.append(taskDesc, taskDue, taskPriority);
 
                 const editButton = document.createElement('button');
                 editButton.type= 'button';
@@ -101,7 +105,7 @@ const TaskInterface = (function () {
                 editButton.textContent = 'edit Task';
                 editButton.addEventListener('click', editTask);
 
-                taskDetails.append(taskInfo,editButton);
+                taskDetails.append(desc, taskDesc, due, taskDue, priority, taskPriority,editButton);
 
 
                 taskList.append(taskItem);

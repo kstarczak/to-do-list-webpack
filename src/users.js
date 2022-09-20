@@ -13,6 +13,7 @@ const Users = (function () {
             const newUser = ToDoList.create(name);
             allUsers.push(newUser);
             switchUser(newUser);
+            addTemplate();
         };
     };
     const switchUser = function (user) {
@@ -116,10 +117,10 @@ const subToInterface = () => {
 
 
 
-const addTemplate = () => {
-        List.addProjectToCurrentUser({ name: 'Grocery List', color: 'PowderBlue' });
-        List.addTaskToCurrentProject({ name: 'milk', description: null, due: null, proiority: 'normal'});
-        List.addTaskToCurrentProject({ name: 'bread', description: 'Gluten-free kind!', due: null, proiority: 'normal'})
+function addTemplate() {
+    List.addProjectToCurrentUser({ name: 'Grocery List', color: 'PowderBlue' });
+    List.addTaskToCurrentProject({ name: 'milk', description: null, due: null, proiority: 'normal'});
+    List.addTaskToCurrentProject({ name: 'bread', description: 'Gluten-free kind!', due: null, proiority: 'normal'})
 };
     
 

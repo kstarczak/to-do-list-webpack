@@ -7,6 +7,18 @@ body{
     background-color: $myLightGray;
 }
 
+input[type="text"], input[type="date"], textarea, select{
+    width: 100%;
+    margin: 5px auto 15px; 
+    border: 2px solid rgb(202, 202, 202);
+    border-radius: 5px;
+    &:focus {
+        outline: none;
+        border-color: white;
+        box-shadow: 0 0 8px 2px rgb(165, 45, 23);
+    }
+}
+
 .user-interface {
     display:flex;
     flex-wrap: wrap;
@@ -32,10 +44,13 @@ body{
         background-size: 60%;
         background-position: center 15%;
         background-repeat: no-repeat;
+        border: 2px solid black;
         border-radius: 5px;
         position: relative;
         z-index: 99;
-
+    }
+    .menu-button.open{
+        background-image: url("images/xmark-solid.svg")
     }
     .menu-button span{
         font-size: 8px;
@@ -45,11 +60,14 @@ body{
         left: 12px;
         text-align: center;
     }
+    .menu-button.open span{
+        display:none;
+    }
     .nav {
         background-color: black;
         color: white;
         width: 0;
-        height: 30vh;
+        height: 100vh;
         overflow: hidden;
         transition-duration: 300ms;
         padding-top: 60px;
@@ -105,7 +123,7 @@ body{
     .project-list li {
         height: 40px;
         border-radius: 10px;
-        margin-bottom: 8px;
+        margin-top: 8px;
         box-shadow: 2px 2px 5px rgb(63, 63, 63);
         display: flex;
     }
@@ -116,6 +134,13 @@ body{
         font-size: 20px;
         flex:1;
         padding: 5px 15px;
+    }
+    .project-list li.empty-list {
+        height: auto;
+        color: rgb(140, 140, 140);
+        background-color: transparent;
+        border: none;
+        box-shadow: none;
     }
     .add-task-button{
         background-color: rgba(255, 255, 255, 0.3);
@@ -143,6 +168,7 @@ body{
 .task-interface {
     width: 100vw;
     .task-header{
+        display: none;
         text-align: center;
         text-transform: uppercase;
         font-size: 18px;
@@ -154,21 +180,84 @@ body{
         padding: 8px;
     }
     .task-list li {
-        height: 30px;
+        font-size: 18px;
+        height: 38px;
         border-radius: 10px;
         margin-bottom: 5px;
         padding: 5px;
-        background-color: rgb(202, 202, 202);
+        background-color: rgb(214, 214, 214);
+        box-shadow: 2px 2px 5px rgb(180, 180, 180);
         overflow: hidden;
     }
     .task-list li.selected {
         height: auto;
-        border: 2px solid rgb(124, 124, 124);
+        box-shadow: 2px 2px 5px rgb(61, 61, 61);
+        /// adkeyframes to expand and collapse
     }
-    .task-list .empty-list {
+    .task-list li.empty-list {
         height: auto;
-        color: rgb(179, 179, 179);
+        color: rgb(140, 140, 140);
         background-color: transparent;
+        box-shadow: none;
+    }.task-list li .task-summary{
+        display: flex;
+        a{
+            flex: 1;
+        }
+        .delete-task-button{
+            width: 28px;
+            height: 28px;
+            background-color: white;
+            background-image: url("images/square-xmark-solid.svg");
+            background-position: center;
+            background-size: 110%;
+            opacity: 0.5;
+            border: none;
+            border-radius: 5px;
+        }
+    }
+    .task-list li .task-details {
+        font-size: 16px;
+        margin-top: 5px;
+        border-top: 1px solid black;
+        padding: 5px;
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-rows: 1fr minmax(1fr, max-content) 1fr 1fr;
+        grid-template-areas:
+            "desc taskDesc taskDesc" 
+            "due dueDate dueDate"
+            "priority priorityValue editButton";
+        gap: 10px;
+        .task-description-title {
+            grid-area: desc;
+            font-weight: 600;
+        }
+        .task-description {
+            grid-area: taskDesc;
+        }
+        .task-due-title {
+            grid-area: due;
+            font-weight: 600;
+        }
+        .task-due {
+            grid-area: dueDate;
+        }
+        .task-priority-title {
+            grid-area: priority;
+            font-weight: 600;
+        }
+        .task-priority {
+            grid-area: priorityValue;
+        }
+        .edit-task-button {
+            grid-area: editButton;
+            border: none;
+            border-radius: 5px;
+            box-shadow: 2px 2px 5px rgb(150, 150, 150);
+            font-size: 14px;
+            padding: 4px;
+        }
     }
 }
 
@@ -208,6 +297,11 @@ body{
         font-size: 18px;
         div{
             margin-bottom: 10px;
+        }
+        .header{
+            font-size: 24px;
+            text-transform: uppercase;
+            margin: 10px auto 30px;
         }
         .button-group{
             display: flex;

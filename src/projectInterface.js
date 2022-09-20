@@ -40,6 +40,7 @@ const ProjectInterface = (function () {
         const loadList = function (list) {
             if (list.length < 1) {
                 const emptyList = document.createElement('li');
+                emptyList.className ='empty-list';
                 emptyList.textContent = 'You do not have any Projects. Click the "Add Project" button to get started.';
                 projectList.appendChild(emptyList);
             } else {

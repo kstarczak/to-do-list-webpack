@@ -38,7 +38,10 @@ const Interface = (function () {
         menuList.append(switchUserList, aboutList);
         nav.append(menuList);
 
-        menuButton.addEventListener('click', () => nav.classList.toggle('open'));
+        menuButton.addEventListener('click', () => {
+            nav.classList.toggle('open');
+            menuButton.classList.toggle('open');
+        });
 
         const addProjectButton =  document.createElement('button');
         addProjectButton.type = 'button';

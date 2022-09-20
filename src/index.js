@@ -7,15 +7,19 @@ import { addUser } from './modal.js';
 
 // add some function to get the user on page laod if stored in localStorage
 //load the interface after that
-// if not loacal sstrorage then: 
+// if not local sstrorage then: 
 //let userName = prompt('Welcome to my "To Do" List. Enter your name to get started.');
 
+function subscribeAllInterfaces() {
+    subInterfaceToList();
+    subProjectInterfaceToList();
+    subTaskInterfaceToList();
+};
 
-subInterfaceToList();
-subProjectInterfaceToList();
-subTaskInterfaceToList();
+
+subscribeAllInterfaces();
 subToUserModal();
 addUser();
 subToInterface();
 
-addTemplate();
+
