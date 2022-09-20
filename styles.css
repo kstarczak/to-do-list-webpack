@@ -147,6 +147,18 @@ body {
   background-color: rgb(200, 200, 200);
 }
 
+input[type=text], input[type=date], textarea, select {
+  width: 100%;
+  margin: 5px auto 15px;
+  border: 2px solid rgb(202, 202, 202);
+  border-radius: 5px;
+}
+input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: white;
+  box-shadow: 0 0 8px 2px rgb(165, 45, 23);
+}
+
 .user-interface {
   display: flex;
   flex-wrap: wrap;
@@ -173,9 +185,13 @@ body {
   background-size: 60%;
   background-position: center 15%;
   background-repeat: no-repeat;
+  border: 2px solid black;
   border-radius: 5px;
   position: relative;
   z-index: 99;
+}
+.user-interface .menu-button.open {
+  background-image: url("images/xmark-solid.svg");
 }
 .user-interface .menu-button span {
   font-size: 8px;
@@ -185,11 +201,14 @@ body {
   left: 12px;
   text-align: center;
 }
+.user-interface .menu-button.open span {
+  display: none;
+}
 .user-interface .nav {
   background-color: black;
   color: white;
   width: 0;
-  height: 30vh;
+  height: 100vh;
   overflow: hidden;
   transition-duration: 300ms;
   padding-top: 60px;
@@ -244,7 +263,7 @@ body {
 .project-interface .project-list li {
   height: 40px;
   border-radius: 10px;
-  margin-bottom: 8px;
+  margin-top: 8px;
   box-shadow: 2px 2px 5px rgb(63, 63, 63);
   display: flex;
 }
@@ -255,6 +274,13 @@ body {
   font-size: 20px;
   flex: 1;
   padding: 5px 15px;
+}
+.project-interface .project-list li.empty-list {
+  height: auto;
+  color: rgb(140, 140, 140);
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
 }
 .project-interface .add-task-button {
   background-color: rgba(255, 255, 255, 0.3);
@@ -281,6 +307,7 @@ body {
   width: 100vw;
 }
 .task-interface .task-header {
+  display: none;
   text-align: center;
   text-transform: uppercase;
   font-size: 18px;
@@ -292,21 +319,81 @@ body {
   padding: 8px;
 }
 .task-interface .task-list li {
-  height: 30px;
+  font-size: 18px;
+  height: 38px;
   border-radius: 10px;
   margin-bottom: 5px;
   padding: 5px;
-  background-color: rgb(202, 202, 202);
+  background-color: rgb(214, 214, 214);
+  box-shadow: 2px 2px 5px rgb(180, 180, 180);
   overflow: hidden;
 }
 .task-interface .task-list li.selected {
   height: auto;
-  border: 2px solid rgb(124, 124, 124);
+  box-shadow: 2px 2px 5px rgb(61, 61, 61);
 }
-.task-interface .task-list .empty-list {
+.task-interface .task-list li.empty-list {
   height: auto;
-  color: rgb(179, 179, 179);
+  color: rgb(140, 140, 140);
   background-color: transparent;
+  box-shadow: none;
+}
+.task-interface .task-list li .task-summary {
+  display: flex;
+}
+.task-interface .task-list li .task-summary a {
+  flex: 1;
+}
+.task-interface .task-list li .task-summary .delete-task-button {
+  width: 28px;
+  height: 28px;
+  background-color: white;
+  background-image: url("images/square-xmark-solid.svg");
+  background-position: center;
+  background-size: 110%;
+  opacity: 0.5;
+  border: none;
+  border-radius: 5px;
+}
+.task-interface .task-list li .task-details {
+  font-size: 16px;
+  margin-top: 5px;
+  border-top: 1px solid black;
+  padding: 5px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  grid-template-rows: 1fr minmax(1fr, max-content) 1fr 1fr;
+  grid-template-areas: "desc taskDesc taskDesc" "due dueDate dueDate" "priority priorityValue editButton";
+  gap: 10px;
+}
+.task-interface .task-list li .task-details .task-description-title {
+  grid-area: desc;
+  font-weight: 600;
+}
+.task-interface .task-list li .task-details .task-description {
+  grid-area: taskDesc;
+}
+.task-interface .task-list li .task-details .task-due-title {
+  grid-area: due;
+  font-weight: 600;
+}
+.task-interface .task-list li .task-details .task-due {
+  grid-area: dueDate;
+}
+.task-interface .task-list li .task-details .task-priority-title {
+  grid-area: priority;
+  font-weight: 600;
+}
+.task-interface .task-list li .task-details .task-priority {
+  grid-area: priorityValue;
+}
+.task-interface .task-list li .task-details .edit-task-button {
+  grid-area: editButton;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 2px 2px 5px rgb(150, 150, 150);
+  font-size: 14px;
+  padding: 4px;
 }
 
 .content-cover {
@@ -347,6 +434,11 @@ body {
 }
 .form-container form div {
   margin-bottom: 10px;
+}
+.form-container form .header {
+  font-size: 24px;
+  text-transform: uppercase;
+  margin: 10px auto 30px;
 }
 .form-container form .button-group {
   display: flex;
