@@ -4,7 +4,7 @@ import { editTask } from './modal.js';
 
 const TaskInterface = (function () {
     const load = function (tasks) {
-        const content = document.getElementById('content');
+        const selectedProject = document.querySelector('.project-list-item.selected');
 
         let taskInterface;
         if (document.querySelector('.task-interface')) {
@@ -13,7 +13,7 @@ const TaskInterface = (function () {
         } else { 
             taskInterface = document.createElement('div');
             taskInterface.className = 'task-interface';
-            content.appendChild(taskInterface);
+            selectedProject.appendChild(taskInterface);
         };
         const taskHeader = document.createElement('div');
         taskHeader.className = 'task-header';
@@ -27,88 +27,120 @@ const TaskInterface = (function () {
 
 
         const selectTask = function (e) {
-            let taskId = e.target.dataset.id
+            let taskId = e.target.dataset.taskId
             taskId = parseInt(taskId);
             PubSub.publish('selectTask', taskId)
         };
     
         const deleteTask = function(e) {
-            let taskId = e.target.dataset.id
+            let taskId = e.target.dataset.taskId
             taskId= parseInt(taskId);
             PubSub.publish('deleteTask', taskId);
         };
 
 
+        // Loads all the tasks in the currently selected project and appends them to the selected project in the DOM
         const loadList = function (list) {
             if (list.length < 1) {
                 const emptyList = document.createElement('li');
                 emptyList.className = 'empty-list';
-                emptyList.textContent = 'This project does not have any lists. Click the "Add Task" button to get started.';
+                emptyList.textContent = 'Select "Add Task" to add items.';
                 taskList.appendChild(emptyList);
             } else {
+
                 list.forEach((task) => {
-                const taskItem = document.createElement('li');
-                taskItem.classList.add ('task');
+                    const taskItem = document.createElement('li');
+                    taskItem.classList.add ('task');
+                    
+                    const taskSummary = document.createElement('div');
+                    taskSummary.classList.add('task-summary');
+
+                    const taskDetails = document.createElement('div');
+                    taskDetails.classList.add('task-details');
+                    
+                    const checkComplete = document.createElement('div');
+                    checkComplete.classList.add('check');
+                    const checkLabel = document.createElement('label');
+                    const checkInput = document.createElement('input');
+                    checkInput.type = 'checkbox';
+                    checkInput.dataset.taskId = task.id;
+
+                    const checkAltInput = document.createElement('div');
+                    checkAltInput.classList.add('alt-checkbox')
+
+                    checkLabel.append(checkInput, checkAltInput);
+                    checkComplete.append(checkLabel);
+
+                    const taskLink = document.createElement('a');
+                    taskLink.classList.add('task-link');
+                    taskLink.dataset.taskId = task.id;
+                    taskLink.textContent = task.name;
+                    taskLink.addEventListener('click', selectTask);
+
+                    if (task.selected) {
+                        taskLink.classList.add('selected');
+                        taskItem.classList.add('selected');
+                    };
+                    if (task.completed) {
+                        taskLink.classList.add('completed');
+                    }
+
+
+                    taskItem.append(taskSummary, taskDetails);
+
+                    const deleteButton = document.createElement('button');
+                    deleteButton.type= 'button';
+                    deleteButton.className ='delete-task-button';
+                    deleteButton.dataset.taskId = task.id;
+                    deleteButton.ariaLabel = "delete task";
+                    deleteButton.addEventListener('click', deleteTask);
+
+                    taskSummary.append(checkComplete, taskLink, deleteButton);   
+                    
+                    const toggleComplete = function (e) {
+                        if (e.target.checked) {
+                            taskLink.classList.add('completed');
+                        } else {
+                            taskLink.classList.remove('completed');
+                        };
+                        //publish complete status
+
+                    };
+                    checkComplete.addEventListener('change', toggleComplete);
+
+
+                    checkInput.addEventListener('change', toggleComplete)
                 
-                const taskSummary = document.createElement('div');
-                taskSummary.classList.add('task-summary');
+                    const desc = document.createElement('div');
+                    desc.classList.add('task-description-title');
+                    desc.textContent = 'Description';
+                    const taskDesc = document.createElement('div');
+                    taskDesc.classList.add('task-description');
+                    taskDesc.textContent = task.description;
+                    const due = document.createElement('div');
+                    due.classList.add('task-due-title');
+                    due.textContent = 'Due date';
+                    const taskDue = document.createElement('div');
+                    taskDue.classList.add('task-due');
+                    taskDue.textContent = task.due;
+                    const priority = document.createElement('div');
+                    priority.classList.add('task-priority-title');
+                    priority.textContent = 'priority'
+                    const taskPriority = document.createElement('div');
+                    taskPriority.classList.add('task-priority');
+                    taskPriority.textContent = task.priority;
 
-                const taskDetails = document.createElement('div');
-                taskDetails.classList.add('task-details');
+                    const editButton = document.createElement('button');
+                    editButton.type= 'button';
+                    editButton.className ='edit-task-button';
+                    editButton.dataset.taskId = task.id;
+                    editButton.textContent = 'Edit';
+                    editButton.addEventListener('click', editTask);
 
-                const taskLink = document.createElement('a');
-                taskLink.classList.add('task-link');
-                taskLink.dataset.id = task.id;
-                taskLink.textContent = task.name;
-                taskLink.addEventListener('click', selectTask);
-                taskLink.addEventListener('click', () => taskDetails.classList.toggle('open'));
-
-                if (task.selected) {
-                    taskLink.classList.add('selected');
-                    taskItem.classList.add('selected');
-                };
-
-                taskItem.append(taskSummary, taskDetails);
-
-                const deleteButton = document.createElement('button');
-                deleteButton.type= 'button';
-                deleteButton.className ='delete-task-button';
-                deleteButton.dataset.id = task.id;
-                deleteButton.ariaLabel = "delete task";
-                deleteButton.addEventListener('click', deleteTask);
-
-                taskSummary.append(taskLink, deleteButton);           
-               
-                const desc = document.createElement('div');
-                desc.classList.add('task-description-title');
-                desc.textContent = 'Description';
-                const taskDesc = document.createElement('div');
-                taskDesc.classList.add('task-description');
-                taskDesc.textContent = task.description;
-                const due = document.createElement('div');
-                due.classList.add('task-due-title');
-                due.textContent = 'Due date';
-                const taskDue = document.createElement('div');
-                taskDue.classList.add('task-due');
-                taskDue.textContent = task.due;
-                const priority = document.createElement('div');
-                priority.classList.add('task-priority-title');
-                priority.textContent = 'priority'
-                const taskPriority = document.createElement('div');
-                taskPriority.classList.add('task-priority');
-                taskPriority.textContent = task.priority;
-
-                const editButton = document.createElement('button');
-                editButton.type= 'button';
-                editButton.className ='edit-task-button';
-                editButton.dataset.id = task.id;
-                editButton.textContent = 'edit Task';
-                editButton.addEventListener('click', editTask);
-
-                taskDetails.append(desc, taskDesc, due, taskDue, priority, taskPriority,editButton);
+                    taskDetails.append(desc, taskDesc, due, taskDue, priority, taskPriority,editButton);
 
 
-                taskList.append(taskItem);
+                    taskList.append(taskItem);
                 });
             };
    

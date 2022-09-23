@@ -24,6 +24,14 @@ const listObject = {
             }
         });
     },
+    toggleComplete: function (itemId) {
+        let completedItem = this.list.find((item) => item.id === itemId);
+        if (completedItem.completed) {
+            completedItem.completed = false;
+        } else {
+            completedItem.completed = true;
+        }
+    },
 };
 
 

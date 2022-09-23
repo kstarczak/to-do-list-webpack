@@ -18,9 +18,10 @@ const Project = (function () {
         const { name, color = 'PowderBlue' } = obj;
         const type = 'project';
         let selected = false;
+        let completed = false;
         const list = [];
         let idCount = 1;
-        return Object.assign(Object.create(listObject), { name, type, selected, color, list, idCount });
+        return Object.assign(Object.create(listObject), { name, type, selected, completed, color, list, idCount });
 ;
     };
     return { create };
@@ -31,8 +32,9 @@ const Task = (function () {
         const { name, description = null, due = null, priority = 'normal' } = obj;
         const type = 'task';
         let selected = false;
+        let completed = false;
         const { select } = { listObject };
-        return { name, type, selected, description, due, priority, select };
+        return { name, type, selected, completed, description, due, priority, select };
     };
     return { create };
 

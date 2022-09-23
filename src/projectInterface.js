@@ -26,31 +26,34 @@ const ProjectInterface = (function () {
 
 
         const selectProject = function (e) {
-            let projectId = e.target.parentElement.id;
-            projectId = parseInt(projectId.replace('project', ''));
+            let projectId = e.target.dataset.projectId;
+            projectId = parseInt(projectId);
             PubSub.publish('selectProject', projectId)
         };
     
         const deleteProject = function(e) {
-            let projectId = e.target.parentElement.id;
-            projectId= parseInt(projectId.replace('project', ''));
+            let projectId = e.target.dataset.projectId;
+            projectId= parseInt(projectId);
             PubSub.publish('deleteProject', projectId);
         };
     
         const loadList = function (list) {
+
             if (list.length < 1) {
                 const emptyList = document.createElement('li');
                 emptyList.className ='empty-list';
-                emptyList.textContent = 'You do not have any Projects. Click the "Add Project" button to get started.';
+                emptyList.textContent = 'Select "Add Project" to get started.';
                 projectList.appendChild(emptyList);
             } else {
                 list.forEach((project) => {
                 const projectListItem = document.createElement('li');
-                projectListItem.id = project.type + project.id;
+                projectListItem.classList.add('project-list-item');
                 projectListItem.style.backgroundColor = project.color;
                 const projectLink = document.createElement('a');
                 projectLink.textContent = project.name;
                 projectLink.classList.add('project-link');
+                projectLink.dataset.projectId = project.id;
+                
                 if (project.selected) {
                     projectListItem.classList.add('selected');
                     projectLink.classList.add('selected');
@@ -59,6 +62,8 @@ const ProjectInterface = (function () {
 
                 const addTaskButton = document.createElement('button');
                 addTaskButton.type = 'button';
+                addTaskButton.dataset.projectId = project.id;
+                addTaskButton.id = project.type + project.id;
                 addTaskButton.className = 'add-task-button button';
                 addTaskButton.textContent = 'Add Task';
                 addTaskButton.addEventListener('click', addTask);
@@ -69,8 +74,12 @@ const ProjectInterface = (function () {
                 deleteButton.className = 'delete-project-button button';
                 deleteButton.ariaLabel = 'delete project';
                 deleteButton.addEventListener('click', deleteProject);
+                
+                const projectListItemSummary = document.createElement('div');
+                projectListItemSummary.classList.add('project-list-item-summary');
+                projectListItemSummary.append(projectLink, addTaskButton, deleteButton)
 
-                projectListItem.append(projectLink, addTaskButton, deleteButton);
+                projectListItem.append(projectListItemSummary);
                 projectList.appendChild(projectListItem);
                 });
             };
