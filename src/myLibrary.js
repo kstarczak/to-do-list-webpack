@@ -1,5 +1,3 @@
-import PubSub from "./pubSub.js";
-
 const deleteAllChildren = function (parent) {
     while (parent.firstChild) {
         parent.removeChild(parent.lastChild);
@@ -23,14 +21,6 @@ const listObject = {
                 item.selected = false;
             }
         });
-    },
-    toggleComplete: function (itemId) {
-        let completedItem = this.list.find((item) => item.id === itemId);
-        if (completedItem.completed) {
-            completedItem.completed = false;
-        } else {
-            completedItem.completed = true;
-        }
     },
 };
 

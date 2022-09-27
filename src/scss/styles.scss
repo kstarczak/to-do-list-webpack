@@ -1,12 +1,12 @@
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import "reset";
 @import "variables";
 @import "mixins";
 
 body{
-    background-image: url('./images/john-towner-3Kv48NS4WUU-unsplash.jpg');
-    background-size: contain;
-    backdrop-filter: blur(5px);
+    background-image: url('./images/marc-pell-forest.jpg');
+    background-size: cover;
 }
 
 input[type="text"], input[type="date"], textarea, select{
@@ -23,8 +23,10 @@ input[type="text"], input[type="date"], textarea, select{
 #content {
     max-width: 800px;
     min-height: 100vh;
-    background-color: $myCharcoal;
+    background-color: transparent;
+    backdrop-filter: blur(8px);
     margin: 0px auto;
+    font-family: 'Poppins', sans-serif;
 }
 
 .user-interface {
@@ -33,11 +35,16 @@ input[type="text"], input[type="date"], textarea, select{
     justify-content: flex-end;
     .header-text{
         font-size: 28px;
-        width: min(100% - 60px, 100%);
+        width: calc(100% - 60px);
         background-color: $myCharcoal;
-        color: $myLightGray;
-        padding-top: 12px;
-        padding-left: 12px;
+        color: white;
+        font-weight: 500;
+        padding: 15px 10px;
+        text-align: center;
+        grid-area: header;
+        @media (min-width:481px) {
+            width: 100%;
+        }
     }
     .menu-wrapper{
         width: 60px;
@@ -75,17 +82,30 @@ input[type="text"], input[type="date"], textarea, select{
         display:none;
     }
     .nav {
-        background-color: black;
-        color: white;
-        width: 0;
-        height: 100vh;
-        overflow: hidden;
-        transition-duration: 300ms;
-        padding-top: 60px;
-        position: absolute;
-        top: 0;
-        right: 0;
-        z-index: 98;
+        grid-area: nav;
+        @media (max-width:480px) {
+            background-color: black;
+            color: white;
+            width: 0;
+            height: 100vh;
+            overflow: hidden;
+            transition-duration: 300ms;
+            padding-top: 60px;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 98;
+        }
+    }
+    .nav.open{
+        @media (max-width:480px) {
+            width: 100vw;
+        }
+    }
+    .nav ul {
+        @media (min-width: 481px) {
+            display: flex;
+        }
     }
     .nav li {
         font-size: 24px;
@@ -93,44 +113,84 @@ input[type="text"], input[type="date"], textarea, select{
         padding: 10px;
         margin: 10px;
         border-radius: 10px;
-
+        @media (min-width:481px) {
+            font-size: 18px;
+            color:white;
+            background-color: rgb(54, 54, 54);
+            margin: 5px;
+        }
     }
-    .nav.open{
-        width: 100vw;
+    .project-header-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        grid-area: project;
+    }
+    .project-header{
+        font-size: 18px;
+        letter-spacing: 0.5ch;
+        padding:10px;
+        color: white;
+        filter: drop-shadow(2px 2px rgb(61, 61, 61));
+        background-color: transparent;
+    }
+    .add-project-button-wrapper {
+        padding: 5px;
+        background-color: transparent;
+        width: 100%;
     }
     .add-project-button{
-        width: min(100vw, 800px);
+        width: min(40vw, 200px);
         font-size: 20px;
         font-weight: 500;
         background-color: rgb(44, 121, 44);
         color: white;
         border: none;
-        padding: 4px;
-        box-shadow: 2px 2px 5px rgb(83, 83, 83);
+        border-radius: 10px;
+        margin-left: auto;
+        padding: 5px;
+        box-shadow: 2px 2px 5px rgb(63, 63, 63);
         display: flex;
+        align-items: center;
+        transition-duration: 200ms;
+        cursor: pointer;
         .add-icon {
-            background-image: url("images/plus-solid.svg");
+            background-image: url("images/plus-solid-white.svg");
             width: 20px;
             height: 20px;
             background-position: center;
             background-repeat: no-repeat;
-            margin: 0 50px;
+            margin: 5px;
         }
+        span {
+            font-size: 12px;
+            @media (min-width:481px) {
+                font-size: 18px;
+            }
+        }
+    }
+    @media (min-width:481px) {
+        display: grid;
+        grid-template-areas: 
+            "header nav"
+            "project project";
+        justify-content: space-between;
+        background-color: $myCharcoal;
     }
 }
 
 .project-interface {
     width: min(100vw, 800px);
-    .project-header{
+    /*.project-header{
         text-align: center;
         text-transform: uppercase;
         background-color: $myCharcoal;
         color: $myLightGray ;
         font-size: 18px;
         padding:5px;
-    }
+    }*/
     .project-list{
-        padding: 5px;
+        padding: 0px 10px;
     }
     .project-list li {
         min-height: 40px;
@@ -139,11 +199,9 @@ input[type="text"], input[type="date"], textarea, select{
         box-shadow: 2px 2px 5px rgb(63, 63, 63);
         display: flex;
         flex-direction: column;
-        backdrop-filter: opacity(20%);
     }
     .project-list li.selected{
         box-shadow: 0 0 5px 2px rgb(165, 45, 23);
-        backdrop-filter: opacity(50%);
     }
     .project-list .project-list-item-summary {
         display:flex;
@@ -153,6 +211,9 @@ input[type="text"], input[type="date"], textarea, select{
         flex:1;
         padding: 5px 15px;
         opacity: 0.7;
+        cursor: pointer;
+        user-select: none;
+        -webkit-user-select: none;
     }
     .project-list a.selected{
         opacity: 1;
@@ -161,7 +222,8 @@ input[type="text"], input[type="date"], textarea, select{
         height: auto;
         font-size: 18px;
         padding-left: 50px;
-        color: rgb(65, 63, 63);
+        color: white;
+        filter: drop-shadow(2px 2px rgb(61, 61, 61));
         background-color: transparent;
         border: none;
         box-shadow: none;
@@ -170,23 +232,27 @@ input[type="text"], input[type="date"], textarea, select{
         display: none;
         background-color: rgb(44, 121, 44);
         color: white;
-        height: 28px;
+        min-height: 28px;
         margin: 6px;
         border: none;
         border-radius: 8px;
         box-shadow: 2px 2px 5px rgb(110, 110, 110);
+        
     }
     .delete-project-button{
         display: none;
         width: 28px;
         height: 28px;
         margin: 6px;
-        background-color: white;
-        background-image: url("images/square-xmark-white.svg");
+        background-color: $xRed;
+        background-image: url("images/xmark-solid-white.svg");
         background-position: center;
-        background-size: 110%;
+        background-size: 70%;
+        background-position: center;
+        background-repeat: no-repeat;
         border: none;
         border-radius: 5px;
+        box-shadow: 2px 2px 5px rgb(110, 110, 110);
     }
     .project-list a.selected ~ button {
         display: block;
@@ -194,7 +260,7 @@ input[type="text"], input[type="date"], textarea, select{
 }
 
 .task-interface {
-    width: min(80vw,700px);
+    width: min(90vw,750px);
     .task-header{
         display: none;
         text-align: center;
@@ -226,7 +292,7 @@ input[type="text"], input[type="date"], textarea, select{
         height: auto;
         font-size: 18px;
         padding-left: 50px;
-        color: rgb(65, 63, 63);
+        color: white;
         background-color: transparent;
         box-shadow: none;
     }
@@ -244,13 +310,14 @@ input[type="text"], input[type="date"], textarea, select{
         .delete-task-button{
             width: 28px;
             height: 28px;
-            background-color: white;
-            background-image: url("images/square-xmark-solid.svg");
+            background-color: $xRed;
+            background-image: url("images/xmark-solid-white.svg");
+            background-size: 70%;
             background-position: center;
-            background-size: 110%;
-            opacity: 0.5;
+            background-repeat: no-repeat;
             border: none;
             border-radius: 5px;
+            box-shadow: 2px 2px 5px rgb(110, 110, 110);
         }
     }
 
@@ -430,3 +497,10 @@ input[type="text"], input[type="date"], textarea, select{
     display: block;
 }
 
+@media (hover: hover) {
+    .add-project-button:hover {
+        transform: translateY(-2px);
+        box-shadow: 2px 4px 5px rgb(63, 63, 63);
+    }
+    //future to-do: change the button color to gray and red on hover for non-mobile screens
+}

@@ -99,9 +99,18 @@ const List = (function () {
         taskToEdit.priority = task.priority;
         PubSub.publish('taskEdited', currentProject.list);
     }
-
+    const toggleTaskComplete = function (taskId) {
+        const currentProject = getCurrentProject();
+        const taskToComplete = currentProject.list.find((task) => task.id === parseInt(taskId));
+        console.log('taskToComplete');
+        if (taskToComplete.completed) {
+            taskToComplete.completed = false;
+        } else {
+            taskToComplete.completed = true;
+        }
+    }
     return { addProjectToCurrentUser, delProjectFromCurrentUser, 
-        displayProjectTasks, addTaskToCurrentProject, deleteTaskFromCurrentUser, displayTaskInfo, editTask};
+        displayProjectTasks, addTaskToCurrentProject, deleteTaskFromCurrentUser, displayTaskInfo, toggleTaskComplete, editTask};
     
 })();
 
@@ -112,6 +121,7 @@ const subToInterface = () => {
     PubSub.subscribe('addTask', List.addTaskToCurrentProject);
     PubSub.subscribe('deleteTask', List.deleteTaskFromCurrentUser);
     PubSub.subscribe('selectTask', List.displayTaskInfo);
+    PubSub.subscribe('completeTask', List.toggleTaskComplete);
     PubSub.subscribe('editTask', List.editTask);
 }
 

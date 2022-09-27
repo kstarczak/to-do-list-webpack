@@ -270,9 +270,9 @@ then populates the form with that data */
 const editTask = (e) => {
     
     const button = e.target;
-    const taskId = e.target.dataset.taskId;
+    const taskId = button.dataset.taskId;
+    const name = button.dataset.taskName;
     const details = Array.from(button.parentElement.children);
-    const name = document.querySelector(`.task-link[data-id='${taskId}']`);
     const currentName = name.textContent;
     const desc = details.find((child) => child.className === 'task-description');
     const currentDesc = desc.textContent

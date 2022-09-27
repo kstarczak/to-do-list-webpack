@@ -83,6 +83,7 @@ const TaskInterface = (function () {
                     };
                     if (task.completed) {
                         taskLink.classList.add('completed');
+                        checkInput.checked = true;
                     }
 
 
@@ -98,15 +99,15 @@ const TaskInterface = (function () {
                     taskSummary.append(checkComplete, taskLink, deleteButton);   
                     
                     const toggleComplete = function (e) {
+                        const taskId = e.target.dataset.taskId;
                         if (e.target.checked) {
                             taskLink.classList.add('completed');
                         } else {
                             taskLink.classList.remove('completed');
                         };
-                        //publish complete status
+                        PubSub.publish('completeTask', taskId);
 
                     };
-                    checkComplete.addEventListener('change', toggleComplete);
 
 
                     checkInput.addEventListener('change', toggleComplete)
@@ -134,6 +135,7 @@ const TaskInterface = (function () {
                     editButton.type= 'button';
                     editButton.className ='edit-task-button';
                     editButton.dataset.taskId = task.id;
+                    editButton.dataset.taskName = task.name;
                     editButton.textContent = 'Edit';
                     editButton.addEventListener('click', editTask);
 

@@ -43,6 +43,15 @@ const Interface = (function () {
             menuButton.classList.toggle('open');
         });
 
+        
+        
+        const projectHeaderWrapper = document.createElement('div');
+        projectHeaderWrapper.className = 'project-header-wrapper';
+        const projectHeader =  document.createElement('div');
+        projectHeader.textContent = "PROJECTS";
+        projectHeader.className = 'project-header';
+        const addProjectButtonWrapper = document.createElement('div');
+        addProjectButtonWrapper.classList.add('add-project-button-wrapper')
         const addProjectButton =  document.createElement('button');
         addProjectButton.type = 'button';
         addProjectButton.className = 'add-project-button button';
@@ -52,9 +61,12 @@ const Interface = (function () {
         addProjectText.textContent = "Add New Project";
         addProjectButton.append(addProjectIcon, addProjectText);
         addProjectButton.addEventListener('click', addProject);
+        addProjectButtonWrapper.appendChild(addProjectButton);
+
+        projectHeaderWrapper. append( projectHeader, addProjectButtonWrapper)
 
 
-        userInterface.append(headerText, menuWrapper, nav, addProjectButton);
+        userInterface.append(headerText, menuWrapper, nav, projectHeaderWrapper);
         content.append(userInterface);
         PubSub.publish('projectListModified', user.list);
 

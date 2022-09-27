@@ -14,9 +14,6 @@ const ProjectInterface = (function () {
             projectInterface.className = 'project-interface';
             content.append(projectInterface);
         };
-        const projectHeader = document.createElement('div');
-        projectHeader.className = 'project-header';
-        projectHeader.textContent = 'Your Projects:';
 
         const projectContainer = document.createElement('div');
         projectContainer.className = 'project-container';
@@ -72,6 +69,7 @@ const ProjectInterface = (function () {
                 const deleteButton = document.createElement('button');
                 deleteButton.type = 'button';
                 deleteButton.className = 'delete-project-button button';
+                deleteButton.dataset.projectId = project.id;
                 deleteButton.ariaLabel = 'delete project';
                 deleteButton.addEventListener('click', deleteProject);
                 
@@ -87,7 +85,7 @@ const ProjectInterface = (function () {
         loadList(projects);
 
 
-        projectInterface.append(projectHeader, projectContainer);
+        projectInterface.append(projectContainer);
         
 
     }; 
