@@ -145,7 +145,7 @@ ul, li {
 }
 
 body {
-  background-image: url("./images/marc-pell-forest.jpg");
+  background-image: url("./images/siim-lukka-unsplash.jpg");
   background-size: cover;
 }
 
@@ -162,12 +162,17 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
 }
 
 #content {
-  max-width: 800px;
   min-height: 100vh;
   background-color: transparent;
   backdrop-filter: blur(8px);
   margin: 0px auto;
   font-family: "Poppins", sans-serif;
+  position: relative;
+}
+
+.user-interface-wrapper {
+  background-color: rgb(5, 30, 35);
+  padding: 0.75rem;
 }
 
 .user-interface {
@@ -178,7 +183,7 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
 .user-interface .header-text {
   font-size: 28px;
   width: calc(100% - 60px);
-  background-color: rgb(40, 40, 40);
+  background-color: rgb(5, 30, 35);
   color: white;
   font-weight: 500;
   padding: 15px 10px;
@@ -193,7 +198,7 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
 .user-interface .menu-wrapper {
   width: 60px;
   padding: 5px;
-  background-color: rgb(40, 40, 40);
+  background-color: rgb(5, 30, 35);
 }
 @media (min-width: 481px) {
   .user-interface .menu-wrapper {
@@ -232,12 +237,12 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
 }
 @media (max-width: 480px) {
   .user-interface .nav {
-    background-color: black;
+    background-color: rgb(5, 30, 35);
     color: white;
     width: 0;
     height: 100vh;
     overflow: hidden;
-    transition-duration: 300ms;
+    transition-duration: 200ms;
     padding-top: 60px;
     position: absolute;
     top: 0;
@@ -257,17 +262,30 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
 }
 .user-interface .nav li {
   font-size: 24px;
-  background-color: rgb(39, 39, 39);
-  padding: 10px;
-  margin: 10px;
+  background-color: rgb(5, 30, 35);
+  margin: 10px 20px;
   border-radius: 10px;
 }
 @media (min-width: 481px) {
   .user-interface .nav li {
     font-size: 18px;
     color: white;
-    background-color: rgb(54, 54, 54);
     margin: 5px;
+  }
+}
+.user-interface .nav li a {
+  text-decoration: none;
+  color: white;
+  display: block;
+  padding: 15px 80px;
+  transition: all 200ms;
+}
+.user-interface .nav li a:hover {
+  background-color: #0b414c;
+}
+@media (min-width: 481px) {
+  .user-interface .nav li a {
+    padding: 15px;
   }
 }
 .user-interface .project-header-wrapper {
@@ -326,12 +344,15 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
     display: grid;
     grid-template-areas: "header nav" "project project";
     justify-content: space-between;
-    background-color: rgb(40, 40, 40);
+    background-color: rgb(5, 30, 35);
+    margin: 0 auto;
+    width: min(100vw, 800px);
   }
 }
 
 .project-interface {
   width: min(100vw, 800px);
+  margin: 0 auto;
   /*.project-header{
       text-align: center;
       text-transform: uppercase;
@@ -345,7 +366,7 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
   padding: 0px 10px;
 }
 .project-interface .project-list li {
-  min-height: 40px;
+  max-height: 40px;
   border-radius: 10px;
   margin-top: 8px;
   box-shadow: 2px 2px 5px rgb(63, 63, 63);
@@ -354,6 +375,7 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
 }
 .project-interface .project-list li.selected {
   box-shadow: 0 0 5px 2px rgb(165, 45, 23);
+  animation: 0.3s ease-out 1 forwards expandProject;
 }
 .project-interface .project-list .project-list-item-summary {
   display: flex;
@@ -409,6 +431,16 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
   display: block;
 }
 
+@keyframes expandProject {
+  0% {
+    opacity: 0.7;
+    max-height: 40px;
+  }
+  100% {
+    opacity: 1;
+    max-height: 400px;
+  }
+}
 .task-interface {
   width: min(90vw, 750px);
 }
@@ -437,6 +469,7 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
 .task-interface .task-list li.selected {
   height: auto;
   box-shadow: 2px 2px 5px rgb(61, 61, 61);
+  animation: 2ms ease-out 1 forwards expandTask;
 }
 .task-interface .task-list li.empty-list {
   height: auto;
@@ -570,6 +603,16 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
   color: white;
 }
 
+@keyframes expandTask {
+  0% {
+    height: 38px;
+    opacity: 0.7;
+  }
+  100% {
+    height: auto;
+    opacity: 1;
+  }
+}
 .content-cover {
   display: none;
   position: fixed;
@@ -618,19 +661,22 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
   display: flex;
   justify-content: space-between;
 }
-.form-container form .button-group button {
+.form-container form .button-group a {
+  display: block;
+  text-decoration: none;
+}
+.form-container form .button-group .button {
   padding: 5px;
   width: 100px;
   border: none;
   border-radius: 15px;
   box-shadow: 2px 2px 5px rgb(66, 66, 66);
+  color: white;
 }
 .form-container form .button-group .cancel {
-  color: white;
   background-color: rgb(94, 3, 3);
 }
 .form-container form .button-group .submit {
-  color: white;
   background-color: rgb(1, 66, 1);
 }
 
