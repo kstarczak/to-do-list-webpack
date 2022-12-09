@@ -7,6 +7,8 @@ const Interface = (function () {
         const content = document.getElementById('content');
         deleteAllChildren(content);
 
+        const userInterfaceWrapper = document.createElement('div');
+        userInterfaceWrapper.className = 'user-interface-wrapper';
         const userInterface = document.createElement('div');
         userInterface.className = 'user-interface';
 
@@ -33,6 +35,7 @@ const Interface = (function () {
         switchUserList.append(switchUserLink);
         const aboutList = document.createElement('li');
         const aboutLink = document.createElement('a');
+        aboutLink.href = "https://konradstar.dev/";
         aboutLink.textContent = 'About';
         aboutList.append(aboutLink);
         menuList.append(switchUserList, aboutList);
@@ -58,7 +61,7 @@ const Interface = (function () {
         const addProjectIcon = document.createElement('div');
         addProjectIcon.className = 'add-icon';
         const addProjectText = document.createElement('span');
-        addProjectText.textContent = "Add New Project";
+        addProjectText.textContent = "Add Project";
         addProjectButton.append(addProjectIcon, addProjectText);
         addProjectButton.addEventListener('click', addProject);
         addProjectButtonWrapper.appendChild(addProjectButton);
@@ -67,7 +70,8 @@ const Interface = (function () {
 
 
         userInterface.append(headerText, menuWrapper, nav, projectHeaderWrapper);
-        content.append(userInterface);
+        userInterfaceWrapper.appendChild(userInterface);
+        content.appendChild(userInterfaceWrapper);
         PubSub.publish('projectListModified', user.list);
 
 

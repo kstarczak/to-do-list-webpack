@@ -1,11 +1,12 @@
 
+@use "sass:color";
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import "reset";
 @import "variables";
 @import "mixins";
 
 body{
-    background-image: url('./images/marc-pell-forest.jpg');
+    background-image: url('./images/siim-lukka-unsplash.jpg');
     background-size: cover;
 }
 
@@ -21,14 +22,17 @@ input[type="text"], input[type="date"], textarea, select{
     }
 }
 #content {
-    max-width: 800px;
     min-height: 100vh;
     background-color: transparent;
     backdrop-filter: blur(8px);
     margin: 0px auto;
     font-family: 'Poppins', sans-serif;
+    position: relative;
 }
-
+.user-interface-wrapper {
+    background-color: $myDarkBlue;
+    padding: 0.75rem;
+}
 .user-interface {
     display:flex;
     flex-wrap: wrap;
@@ -36,7 +40,7 @@ input[type="text"], input[type="date"], textarea, select{
     .header-text{
         font-size: 28px;
         width: calc(100% - 60px);
-        background-color: $myCharcoal;
+        background-color: $myDarkBlue;
         color: white;
         font-weight: 500;
         padding: 15px 10px;
@@ -49,7 +53,7 @@ input[type="text"], input[type="date"], textarea, select{
     .menu-wrapper{
         width: 60px;
         padding: 5px;
-        background-color: $myCharcoal;
+        background-color: $myDarkBlue;
         @media (min-width:481px) {
             display: none;
         }
@@ -84,12 +88,12 @@ input[type="text"], input[type="date"], textarea, select{
     .nav {
         grid-area: nav;
         @media (max-width:480px) {
-            background-color: black;
+            background-color: rgb(5, 30, 35);
             color: white;
             width: 0;
             height: 100vh;
             overflow: hidden;
-            transition-duration: 300ms;
+            transition-duration: 200ms;
             padding-top: 60px;
             position: absolute;
             top: 0;
@@ -109,15 +113,26 @@ input[type="text"], input[type="date"], textarea, select{
     }
     .nav li {
         font-size: 24px;
-        background-color: rgb(39, 39, 39);
-        padding: 10px;
-        margin: 10px;
+        background-color: $myDarkBlue;
+        margin: 10px 20px;
         border-radius: 10px;
         @media (min-width:481px) {
             font-size: 18px;
             color:white;
-            background-color: rgb(54, 54, 54);
             margin: 5px;
+        }
+        a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            padding: 15px 80px;
+            transition: all 200ms;
+            &:hover{
+                background-color: color.scale($myDarkBlue, $lightness: 10%);
+            }
+            @media (min-width:481px) {
+                padding: 15px;
+            }
         }
     }
     .project-header-wrapper {
@@ -175,12 +190,15 @@ input[type="text"], input[type="date"], textarea, select{
             "header nav"
             "project project";
         justify-content: space-between;
-        background-color: $myCharcoal;
+        background-color: $myDarkBlue;
+        margin: 0 auto;
+        width: min(100vw, 800px);
     }
 }
 
 .project-interface {
     width: min(100vw, 800px);
+    margin: 0 auto;
     /*.project-header{
         text-align: center;
         text-transform: uppercase;
@@ -193,7 +211,7 @@ input[type="text"], input[type="date"], textarea, select{
         padding: 0px 10px;
     }
     .project-list li {
-        min-height: 40px;
+        max-height: 40px;
         border-radius: 10px;
         margin-top: 8px;
         box-shadow: 2px 2px 5px rgb(63, 63, 63);
@@ -202,6 +220,7 @@ input[type="text"], input[type="date"], textarea, select{
     }
     .project-list li.selected{
         box-shadow: 0 0 5px 2px rgb(165, 45, 23);
+        animation: 0.3s ease-out 1 forwards expandProject;
     }
     .project-list .project-list-item-summary {
         display:flex;
@@ -259,6 +278,17 @@ input[type="text"], input[type="date"], textarea, select{
     }
 }
 
+@keyframes expandProject {
+    0% {
+        opacity: 0.7;
+        max-height: 40px;
+    }
+    100% {
+        opacity: 1;
+        max-height: 400px;
+    }
+}
+
 .task-interface {
     width: min(90vw,750px);
     .task-header{
@@ -286,7 +316,7 @@ input[type="text"], input[type="date"], textarea, select{
     .task-list li.selected {
         height: auto;
         box-shadow: 2px 2px 5px rgb(61, 61, 61);
-        /// adkeyframes to expand and collapse
+        animation: 2ms ease-out 1 forwards expandTask;
     }
     .task-list li.empty-list {
         height: auto;
@@ -320,8 +350,6 @@ input[type="text"], input[type="date"], textarea, select{
             box-shadow: 2px 2px 5px rgb(110, 110, 110);
         }
     }
-
-    // new css
     .task-list li .task-summary>.check{
         position: relative;
         label {
@@ -380,7 +408,6 @@ input[type="text"], input[type="date"], textarea, select{
             }
         */
     }
-    // end new css
     .task-list li .task-details {
         font-size: 16px;
         margin-top: 5px;
@@ -425,6 +452,16 @@ input[type="text"], input[type="date"], textarea, select{
             background-color: rgb(44, 121, 44);
             color: white;
         }
+    }
+}
+@keyframes expandTask {
+    0% {
+        height: 38px;
+        opacity: 0.7;
+    }
+    100% {
+        height: auto;
+        opacity: 1;
     }
 }
 
@@ -473,20 +510,23 @@ input[type="text"], input[type="date"], textarea, select{
         .button-group{
             display: flex;
             justify-content: space-between;
+            a{
+              display: block;
+              text-decoration: none;
+            }
         }
-        .button-group button{
+        .button-group .button{
             padding: 5px;
             width: 100px;
             border: none;
             border-radius: 15px;
             box-shadow: 2px 2px 5px rgb(66, 66, 66);
+            color: white;
         }
         .button-group .cancel {
-            color: white;
             background-color: rgb(94, 3, 3);
         }
         .button-group .submit {
-            color:white;
             background-color: rgb(1, 66, 1);
         }
 

@@ -73,11 +73,10 @@ const addUser = () => {
     const buttonGroup = document.createElement('div');
     buttonGroup.classList.add('button-group');
     
-    const cancelButton = document.createElement('button');
-    cancelButton.type = 'button';
+    const cancelButton = document.createElement('a');
     cancelButton.classList.add('button', 'cancel');
     cancelButton.textContent = 'Cancel';
-    cancelButton.addEventListener('click', closeModal);
+    cancelButton.href = "https://konradstar.dev/";
 
     const submitButton = document.createElement('button')
     submitButton.type = 'button';
