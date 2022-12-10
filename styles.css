@@ -206,15 +206,15 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
   }
 }
 .user-interface .menu-button {
-  height: 50px;
-  width: 50px;
-  background-color: rgb(200, 200, 200);
+  height: 48px;
+  width: 48px;
+  background-color: rgb(150, 150, 150);
   background-image: url("images/bars-solid.svg");
   background-size: 60%;
-  background-position: center 15%;
+  background-position: center 35%;
   background-repeat: no-repeat;
-  border: 2px solid black;
-  border-radius: 5px;
+  border: 1px solid black;
+  border-radius: 4px;
   position: relative;
   z-index: 99;
 }
@@ -264,7 +264,7 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
   font-size: 24px;
   background-color: rgb(5, 30, 35);
   margin: 10px 20px;
-  border-radius: 10px;
+  border-radius: 5px;
 }
 @media (min-width: 481px) {
   .user-interface .nav li {
@@ -288,6 +288,9 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
     padding: 15px;
   }
 }
+.user-interface .switch-user-li {
+  display: none;
+}
 .user-interface .project-header-wrapper {
   display: flex;
   align-items: center;
@@ -308,16 +311,13 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
   width: 100%;
 }
 .user-interface .add-project-button {
-  width: min(40vw, 200px);
-  font-size: 20px;
+  width: min(34vw, 150px);
   font-weight: 500;
-  background-color: rgb(44, 121, 44);
-  color: white;
+  background-color: rgb(30, 61, 5);
   border: none;
-  border-radius: 10px;
+  border-radius: 2px;
   margin-left: auto;
   padding: 5px;
-  box-shadow: 2px 2px 5px rgb(63, 63, 63);
   display: flex;
   align-items: center;
   transition-duration: 200ms;
@@ -332,7 +332,8 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
   margin: 5px;
 }
 .user-interface .add-project-button span {
-  font-size: 12px;
+  font-size: 14px;
+  color: white;
 }
 @media (min-width: 481px) {
   .user-interface .add-project-button span {
@@ -365,16 +366,17 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
 .project-interface .project-list {
   padding: 0px 10px;
 }
-.project-interface .project-list li {
+.project-interface .project-list > li {
   max-height: 40px;
-  border-radius: 10px;
+  border-radius: 5px;
   margin-top: 8px;
   box-shadow: 2px 2px 5px rgb(63, 63, 63);
   display: flex;
+  opacity: 0.8;
   flex-direction: column;
 }
-.project-interface .project-list li.selected {
-  box-shadow: 0 0 5px 2px rgb(165, 45, 23);
+.project-interface .project-list > li.selected {
+  box-shadow: 2px 2px 5px 2px rgb(53, 53, 53);
   animation: 0.3s ease-out 1 forwards expandProject;
 }
 .project-interface .project-list .project-list-item-summary {
@@ -396,21 +398,22 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
   height: auto;
   font-size: 18px;
   padding-left: 50px;
-  color: white;
-  filter: drop-shadow(2px 2px rgb(61, 61, 61));
+  color: rgb(226, 226, 226);
+  text-shadow: 2px 2px 4px rgb(34, 34, 34);
   background-color: transparent;
   border: none;
   box-shadow: none;
 }
 .project-interface .add-task-button {
   display: none;
-  background-color: rgb(44, 121, 44);
+  background-color: #468f0c;
   color: white;
   min-height: 28px;
   margin: 6px;
   border: none;
-  border-radius: 8px;
+  border-radius: 2px;
   box-shadow: 2px 2px 5px rgb(110, 110, 110);
+  transition: 0.2s all;
 }
 .project-interface .delete-project-button {
   display: none;
@@ -420,12 +423,23 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
   background-color: rgb(161, 56, 56);
   background-image: url("images/xmark-solid-white.svg");
   background-position: center;
-  background-size: 70%;
+  background-size: 60%;
   background-position: center;
   background-repeat: no-repeat;
   border: none;
-  border-radius: 5px;
+  border-radius: 2px;
   box-shadow: 2px 2px 5px rgb(110, 110, 110);
+  transition: 0.2ms all;
+}
+.project-interface .delete-project-button:hover {
+  background-color: rgb(161, 56, 56);
+  box-shadow: 2px 2px 5px rgb(110, 110, 110);
+}
+@media screen and (min-width: 480px) {
+  .project-interface .delete-project-button {
+    background-color: rgb(148, 148, 148);
+    box-shadow: none;
+  }
 }
 .project-interface .project-list a.selected ~ button {
   display: block;
@@ -456,26 +470,29 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
 .task-interface .task-list {
   padding: 8px;
 }
-.task-interface .task-list li {
+.task-interface .task-list > li {
   font-size: 20px;
   height: 38px;
-  border-radius: 10px;
+  border-radius: 5px;
   margin-bottom: 5px;
   padding: 5px;
-  background-color: rgb(214, 214, 214);
-  box-shadow: 2px 2px 5px rgb(180, 180, 180);
+  background-color: rgb(226, 226, 226);
+  opacity: 0.7;
+  box-shadow: 2px 2px 5px rgb(92, 92, 92);
   overflow: hidden;
 }
-.task-interface .task-list li.selected {
+.task-interface .task-list > li.selected {
   height: auto;
-  box-shadow: 2px 2px 5px rgb(61, 61, 61);
-  animation: 2ms ease-out 1 forwards expandTask;
+  opacity: 0.8;
+  animation: 0.3s ease-out 1 forwards expandTask;
 }
-.task-interface .task-list li.empty-list {
+.task-interface .task-list > li.empty-list {
   height: auto;
   font-size: 18px;
   padding-left: 50px;
-  color: white;
+  margin-top: -10px;
+  color: rgb(226, 226, 226);
+  text-shadow: 2px 2px 4px rgb(34, 34, 34);
   background-color: transparent;
   box-shadow: none;
 }
@@ -495,12 +512,23 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
   height: 28px;
   background-color: rgb(161, 56, 56);
   background-image: url("images/xmark-solid-white.svg");
-  background-size: 70%;
+  background-size: 60%;
   background-position: center;
   background-repeat: no-repeat;
   border: none;
-  border-radius: 5px;
   box-shadow: 2px 2px 5px rgb(110, 110, 110);
+  border-radius: 2px;
+  transition: all 200ms;
+}
+.task-interface .task-list li .task-summary .delete-task-button:hover {
+  background-color: rgb(161, 56, 56);
+  box-shadow: 2px 2px 5px rgb(110, 110, 110);
+}
+@media screen and (min-width: 480px) {
+  .task-interface .task-list li .task-summary .delete-task-button {
+    background-color: rgb(148, 148, 148);
+    box-shadow: none;
+  }
 }
 .task-interface .task-list li .task-summary > .check {
   position: relative;
@@ -595,21 +623,21 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
 .task-interface .task-list li .task-details .edit-task-button {
   grid-area: editButton;
   border: none;
-  border-radius: 5px;
+  border-radius: 2px;
   box-shadow: 2px 2px 5px rgb(121, 120, 120);
   font-size: 14px;
   padding: 4px;
-  background-color: rgb(44, 121, 44);
+  background-color: #468f0c;
   color: white;
 }
 
 @keyframes expandTask {
   0% {
-    height: 38px;
+    max-height: 38px;
     opacity: 0.7;
   }
   100% {
-    height: auto;
+    max-height: 200px;
     opacity: 1;
   }
 }
@@ -669,7 +697,7 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
   padding: 5px;
   width: 100px;
   border: none;
-  border-radius: 15px;
+  border-radius: 2px;
   box-shadow: 2px 2px 5px rgb(66, 66, 66);
   color: white;
 }
@@ -679,6 +707,36 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
 .form-container form .button-group .submit {
   background-color: rgb(1, 66, 1);
 }
+.form-container form .color-header {
+  font-family: "Poppins", sans-serif;
+  font-size: 18px;
+  margin: 0;
+}
+.form-container form .color-selector {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 0.5rem 1rem 1rem;
+  gap: 1.5rem;
+}
+.form-container form .color-selector .color-control {
+  display: block;
+  border-radius: 50%;
+}
+.form-container form .color-selector input[type=radio] {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  transition: all 200ms;
+  cursor: pointer;
+}
+.form-container form .color-selector input[type=radio]:checked {
+  outline: 5px solid black;
+  box-shadow: 0px 0px 5px 5px gray;
+}
 
 .form-container.open {
   display: block;
@@ -686,9 +744,33 @@ input[type=text]:focus, input[type=date]:focus, textarea:focus, select:focus {
 
 @media (hover: hover) {
   .add-project-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 2px 4px 5px rgb(63, 63, 63);
+    transform: scale(1.0625);
+    background-color: #326608;
+    box-shadow: 2px 2px 5px rgb(0, 0, 0);
   }
+  .add-task-button:hover {
+    background-color: #5bb80f;
+  }
+  .edit-task-button:hover {
+    background-color: #5bb80f;
+  }
+}
+footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgb(40, 40, 40);
+  padding: 1rem;
+}
+footer > a {
+  display: block;
+  text-decoration: none;
+  color: white;
+}
+footer > a:hover {
+  color: white;
+  transform: scale(1.25);
 }
 
 /*# sourceMappingURL=styles.css.map */
