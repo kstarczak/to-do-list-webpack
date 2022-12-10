@@ -7,6 +7,12 @@ const Interface = (function () {
         const content = document.getElementById('content');
         deleteAllChildren(content);
 
+        const footer = document.createElement('footer');
+        const footerLink = document.createElement('a');
+        footerLink.className = 'footer-link';
+        footerLink.href = "https://konradstar.dev/";
+        footer.appendChild(footerLink);
+
         const userInterfaceWrapper = document.createElement('div');
         userInterfaceWrapper.className = 'user-interface-wrapper';
         const userInterface = document.createElement('div');
@@ -21,10 +27,7 @@ const Interface = (function () {
         const menuButton = document.createElement('button');
         menuButton.className='menu-button';
         menuButton.type = 'button';
-        const menuText = document.createElement('span');
-        menuText.textContent = 'Menu';
         menuWrapper.append(menuButton);
-        menuButton.append(menuText);
 
         const nav = document.createElement('nav');
         nav.classList.add('nav');
@@ -32,6 +35,7 @@ const Interface = (function () {
         const switchUserList = document.createElement('li');
         const switchUserLink = document.createElement('a');
         switchUserLink.textContent = 'Switch User';
+        switchUserList.className = 'switch-user-li';
         switchUserList.append(switchUserLink);
         const aboutList = document.createElement('li');
         const aboutLink = document.createElement('a');
@@ -66,12 +70,12 @@ const Interface = (function () {
         addProjectButton.addEventListener('click', addProject);
         addProjectButtonWrapper.appendChild(addProjectButton);
 
-        projectHeaderWrapper. append( projectHeader, addProjectButtonWrapper)
+        projectHeaderWrapper.append( projectHeader, addProjectButtonWrapper)
 
 
         userInterface.append(headerText, menuWrapper, nav, projectHeaderWrapper);
         userInterfaceWrapper.appendChild(userInterface);
-        content.appendChild(userInterfaceWrapper);
+        content.appendChild(userInterfaceWrapper, footer);
         PubSub.publish('projectListModified', user.list);
 
 

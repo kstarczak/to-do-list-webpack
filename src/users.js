@@ -36,9 +36,6 @@ const subToUserModal = ()=> {
 }
 
 
-
-
-
 const List = (function () {
     const getCurrentProject = function () {
         const currentUser = Users.currentUser();

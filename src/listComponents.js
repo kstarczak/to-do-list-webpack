@@ -15,7 +15,7 @@ const ToDoList = (function () {
 
 const Project = (function () {
     const create = function (obj) {
-        const { name, color = 'PowderBlue' } = obj;
+        const { name, color = '#a7ffeb' } = obj;
         const type = 'project';
         let selected = false;
         let completed = false;

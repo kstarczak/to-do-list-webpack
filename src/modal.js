@@ -1,7 +1,7 @@
 import PubSub from "./pubSub.js";
 import { deleteAllChildren } from "./myLibrary.js";
 
-//DeleteProjectModal (are you sure???)
+//Add deleteProjectModal (are you sure???)
 
 const loadModalTemplate = () => {
     const content = document.getElementById('content');
@@ -114,28 +114,39 @@ const addProject = () => {
     const nameField = document.createElement('div');
     const nameLabel = document.createElement('label');
     nameLabel.for = 'name';
-    nameLabel.textContent = 'Project Name:'
+    nameLabel.textContent = 'Name:'
     const nameInput = document.createElement('input');
     nameInput.id = 'name';
     nameInput.type = 'text'
     nameField.append(nameLabel, nameInput);
 
-    const colorField = document.createElement('div');
-    const colorLabel = document.createElement('label');
-    colorLabel.for = 'color1';
+    const colorHeader = document.createElement('div');
+    colorHeader.className = 'color-header';
+    colorHeader.textContent = 'Color:';
+  
+    const colorSelector = document.createElement('div')
+    colorSelector.className ='color-selector';
+    const colorHexArray = ['#f28b82', '#fbbc04', '#fff475', '#ccff90', '#a7ffeb', '#aecbfa'];
 
-    colorLabel.textContent = 'Choose a color (optional)';
-    const colorInput = document.createElement('input');
-    colorInput.id = 'color';
-    colorInput.type= 'color'
-    colorInput.value = "#f6b73c"
-    colorInput.addEventListener('change', function() { colorLabel.style.backgroundColor = this.value; });
-    colorField.append(colorLabel, colorInput);
-
+    colorHexArray.forEach((color,i) => {
+        const colorLabel = document.createElement('label');
+        colorLabel.className = 'color-control';
+        colorLabel.for = color;
+        const colorInput = document.createElement('input');
+        colorInput.type = 'radio';
+        colorInput.name = 'color-input';
+        colorInput.id = color;
+        colorInput.style.backgroundColor = color;
+        if (i === 0) {
+            colorInput.checked = true;     
+        };
+        colorLabel.appendChild(colorInput);
+        colorSelector.appendChild(colorLabel);
+    })
 
     const submitForm = () => {
         const name = document.getElementById('name').value;
-        const color = document.getElementById('color').value;
+        const color = document.querySelector('input[name="color-input"]:checked').id;
         const newProject = { name, color };
         closeModal();
         PubSub.publish('addProject', newProject);
@@ -158,7 +169,7 @@ const addProject = () => {
     buttonGroup.append(cancelButton, submitButton);
 
 
-    projectForm.append(header, nameField, colorField, buttonGroup);
+    projectForm.append(header, nameField, colorHeader, colorSelector, buttonGroup);
     projectForm.addEventListener('submit', (event) => {
         event.preventDefault();
         submitForm();
@@ -272,7 +283,6 @@ const editTask = (e) => {
     const taskId = button.dataset.taskId;
     const name = button.dataset.taskName;
     const details = Array.from(button.parentElement.children);
-    const currentName = name.textContent;
     const desc = details.find((child) => child.className === 'task-description');
     const currentDesc = desc.textContent
     const due = details.find((child) => child.className === 'task-due');
@@ -299,7 +309,7 @@ const editTask = (e) => {
     nameInput.id = 'name';
     nameInput.type = 'text'
     nameField.append(nameLabel, nameInput);
-    nameInput.value = currentName;
+    nameInput.value = name;
 
     const descField = document.createElement('div');
     const descLabel = document.createElement('label');
@@ -349,7 +359,6 @@ const editTask = (e) => {
         const task = { name, description, due, priority };
         const modifiedTask = { id: parseInt(taskId) , task};
         closeModal();
-        console.log(modifiedTask);
         PubSub.publish('editTask', modifiedTask)
     };
 
